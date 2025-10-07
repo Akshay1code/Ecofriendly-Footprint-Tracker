@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoFootprint Calculator - Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Floating Leaves Animation -->
+    <div class="floating-leaves">
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+    </div>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <div class="login-box">
+            <h1 class="login-title">🌱 EcoFootprint</h1>
+            <p class="login-subtitle">Calculate your environmental impact and make a difference</p>
+            
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <input type="email" id="email" placeholder=" " required>
+                    <label for="email">Email Address</label>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" id="password" placeholder=" " required>
+                    <label for="password">Password</label>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    Login to Dashboard
+                </button>
+            </form>
+            
+            <div style="margin-top: 20px; color: var(--secondary-green); font-size: 0.9em;">
+                <p>Demo credentials:</p>
+                <p><strong>Email:</strong> demo@ecofootprint.com</p>
+                <p><strong>Password:</strong> ecogreen123</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced login functionality with animations
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = event.target.querySelector('.login-btn');
+            
+            // Add loading animation
+            loginBtn.innerHTML = 'Logging in... 🌿';
+            loginBtn.style.background = 'linear-gradient(45deg, #4A7C59, #8FBC8F)';
+            
+            // Simulate login process with animation
+            setTimeout(() => {
+                // Simple validation (in real app, this would be server-side)
+                if (email === 'demo@ecofootprint.com' && password === 'ecogreen123') {
+                    // Store login state
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userEmail', email);
+                    
+                    // Success animation
+                    loginBtn.innerHTML = 'Login Successful! ✅';
+                    loginBtn.style.background = 'linear-gradient(45deg, #8FBC8F, #F0E68C)';
+                    
+                    // Add success glow effect
+                    document.querySelector('.login-box').classList.add('glow');
+                    
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                } else {
+                    // Error animation
+                    loginBtn.innerHTML = 'Invalid Credentials ❌';
+                    loginBtn.style.background = 'linear-gradient(45deg, #dc3545, #c82333)';
+                    
+                    // Shake animation for error
+                    document.querySelector('.login-box').style.animation = 'shake 0.5s';
+                    
+                    // Reset button after error
+                    setTimeout(() => {
+                        loginBtn.innerHTML = 'Login to Dashboard';
+                        loginBtn.style.background = 'linear-gradient(45deg, var(--secondary-green), var(--primary-green))';
+                        document.querySelector('.login-box').style.animation = '';
+                    }, 2000);
+                }
+            }, 1500);
+        }
+
+        // Add shake animation for errors
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Add floating input label functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('.form-group input');
+            inputs.forEach(input => {
+                // Check if input has value on page load
+                if (input.value) {
+                    input.classList.add('has-value');
+                }
+                
+                input.addEventListener('input', function() {
+                    if (this.value) {
+                        this.classList.add('has-value');
+                    } else {
+                        this.classList.remove('has-value');
+                    }
+                });
+            });
+        });
+
+        // Particle effect on hover
+        document.querySelector('.login-box').addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.02)';
+        });
+
+        document.querySelector('.login-box').addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+
+        // Check if already logged in
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>

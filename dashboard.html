@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoFootprint Calculator - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Floating Leaves Animation -->
+    <div class="floating-leaves">
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+    </div>
+
+    <div class="dashboard">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <a href="dashboard.html" class="logo">EcoFootprint</a>
+                <ul class="nav-links">
+                    <li><a href="dashboard.html" class="active">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="profile.html">Profile Settings</a></li>
+                    <li><a href="#" onclick="logout()" style="color: #F0E68C;">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Left Sidebar -->
+            <aside class="left-sidebar">
+                <!-- Achievements Section -->
+                <div class="sidebar-card">
+                    <h3 class="card-title" data-icon="🏆">Achievements</h3>
+                    <div class="achievement-item">
+                        <div>🌟 First Calculator Use</div>
+                        <span class="achievement-badge">Completed</span>
+                    </div>
+                    <div class="achievement-item">
+                        <div>🚗 Car-Free Week</div>
+                        <span class="achievement-badge">In Progress</span>
+                    </div>
+                    <div class="achievement-item">
+                        <div>♻️ Recycling Champion</div>
+                        <span class="achievement-badge">75%</span>
+                    </div>
+                    <div class="achievement-item">
+                        <div>💚 Green Energy User</div>
+                        <span class="achievement-badge">New</span>
+                    </div>
+                    <div class="achievement-item">
+                        <div>🌱 Carbon Neutral Month</div>
+                        <span class="achievement-badge">Locked</span>
+                    </div>
+                </div>
+
+                <!-- To-Do List Section -->
+                <div class="sidebar-card">
+                    <h3 class="card-title" data-icon="📋">To-Do List</h3>
+                    <div class="task-item">
+                        <input type="checkbox" id="task1" checked>
+                        <label for="task1">Calculate weekly footprint</label>
+                    </div>
+                    <div class="task-item">
+                        <input type="checkbox" id="task2">
+                        <label for="task2">Switch to LED bulbs</label>
+                    </div>
+                    <div class="task-item">
+                        <input type="checkbox" id="task3">
+                        <label for="task3">Start composting</label>
+                    </div>
+                    <div class="task-item">
+                        <input type="checkbox" id="task4">
+                        <label for="task4">Use public transport more</label>
+                    </div>
+                    <div class="task-item">
+                        <input type="checkbox" id="task5">
+                        <label for="task5">Reduce meat consumption</label>
+                    </div>
+                </div>
+
+                <!-- Suggestions Section -->
+                <div class="sidebar-card">
+                    <h3 class="card-title" data-icon="💡">Eco Suggestions</h3>
+                    <div class="suggestion-item">
+                        <div><strong>Energy Tip:</strong> Unplug electronics when not in use to save 10% on electricity</div>
+                    </div>
+                    <div class="suggestion-item">
+                        <div><strong>Transport:</strong> Bike to work once a week to reduce CO2 by 2.6kg</div>
+                    </div>
+                    <div class="suggestion-item">
+                        <div><strong>Water:</strong> Take shorter showers to save 25 gallons per week</div>
+                    </div>
+                    <div class="suggestion-item">
+                        <div><strong>Diet:</strong> Try meatless Monday to reduce weekly carbon footprint by 15%</div>
+                    </div>
+                </div>
+
+                <!-- Today's Tasks Section -->
+                <div class="sidebar-card">
+                    <h3 class="card-title" data-icon="⏰">Today's Tasks</h3>
+                    <div class="task-item">
+                        <div>🔌 Check smart thermostat settings</div>
+                    </div>
+                    <div class="task-item">
+                        <div>🚲 Plan cycling route for tomorrow</div>
+                    </div>
+                    <div class="task-item">
+                        <div>📊 Review yesterday's energy usage</div>
+                    </div>
+                    <div class="task-item">
+                        <div>🛒 Make eco-friendly shopping list</div>
+                    </div>
+                </div>
+
+                <!-- Calculator Link -->
+                <div class="sidebar-card" style="background: linear-gradient(135deg, var(--secondary-green), var(--primary-green)); color: white; text-align: center;">
+                    <h3 class="card-title" data-icon="🧮" style="color: var(--accent-yellow);">Footprint Calculator</h3>
+                    <p style="margin-bottom: 15px;">Calculate your environmental impact</p>
+                    <a href="calculator.html" style="background: var(--accent-yellow); color: var(--dark-green); padding: 12px 20px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-block; transition: all 0.3s ease;">
+                        Start Calculation →
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Section -->
+            <main class="main-section">
+                <div style="text-align: center; padding: 40px 0;">
+                    <h1 style="color: var(--primary-green); font-size: 2.5em; margin-bottom: 20px; animation: titleGlow 2s ease-in-out infinite alternate;">
+                        Welcome to Your Eco Dashboard! 🌍
+                    </h1>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 40px 0;">
+                        <!-- Stats Cards -->
+                        <div style="background: linear-gradient(135deg, #8FBC8F, #F0E68C); padding: 25px; border-radius: 15px; color: var(--dark-green); text-align: center; animation: fadeInUp 1s ease-out;">
+                            <h3 style="font-size: 2em; margin-bottom: 10px;">2.5 tons</h3>
+                            <p>CO2 Saved This Year</p>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #4A7C59, #8FBC8F); padding: 25px; border-radius: 15px; color: white; text-align: center; animation: fadeInUp 1s ease-out 0.2s; animation-fill-mode: both;">
+                            <h3 style="font-size: 2em; margin-bottom: 10px;">87%</h3>
+                            <p>Eco Goals Achieved</p>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #2D5016, #4A7C59); padding: 25px; border-radius: 15px; color: var(--accent-yellow); text-align: center; animation: fadeInUp 1s ease-out 0.4s; animation-fill-mode: both;">
+                            <h3 style="font-size: 2em; margin-bottom: 10px;">#12</h3>
+                            <p>Global Ranking</p>
+                        </div>
+                    </div>
+
+                    <!-- Progress Chart Placeholder -->
+                    <div style="background: rgba(255,255,255,0.9); padding: 30px; border-radius: 20px; margin: 30px 0; border: 2px solid rgba(74, 124, 89, 0.2);">
+                        <h3 style="color: var(--primary-green); margin-bottom: 20px;">Monthly Carbon Footprint Progress</h3>
+                        <div style="height: 200px; background: linear-gradient(to right, var(--light-green), var(--secondary-green)); border-radius: 10px; display: flex; align-items: end; justify-content: space-around; padding: 20px;">
+                            <!-- Simulated Chart Bars -->
+                            <div style="width: 30px; height: 60%; background: var(--accent-yellow); border-radius: 5px 5px 0 0; animation: barGrow 1s ease-out 0.1s both;"></div>
+                            <div style="width: 30px; height: 75%; background: var(--light-green); border-radius: 5px 5px 0 0; animation: barGrow 1s ease-out 0.3s both;"></div>
+                            <div style="width: 30px; height: 45%; background: var(--secondary-green); border-radius: 5px 5px 0 0; animation: barGrow 1s ease-out 0.5s both;"></div>
+                            <div style="width: 30px; height: 30%; background: var(--primary-green); border-radius: 5px 5px 0 0; animation: barGrow 1s ease-out 0.7s both;"></div>
+                            <div style="width: 30px; height: 20%; background: var(--dark-green); border-radius: 5px 5px 0 0; animation: barGrow 1s ease-out 0.9s both;"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-around; margin-top: 10px; font-size: 0.9em; color: var(--secondary-green);">
+                            <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
+                        <a href="calculator.html" style="background: var(--secondary-green); color: white; padding: 15px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: all 0.3s ease; animation: pulse 2s infinite;">
+                            🧮 Calculate Footprint
+                        </a>
+                        <a href="about.html" style="background: var(--light-green); color: var(--dark-green); padding: 15px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: all 0.3s ease;">
+                            📖 Learn More
+                        </a>
+                        <a href="profile.html" style="background: var(--accent-yellow); color: var(--dark-green); padding: 15px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: all 0.3s ease;">
+                            ⚙️ Settings
+                        </a>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Right Sidebar - Ranking System -->
+            <aside class="right-sidebar">
+                <div class="sidebar-card">
+                    <h3 class="card-title" data-icon="🏅">Global Rankings</h3>
+                    <div class="ranking-list">
+                        <div class="ranking-item gold">
+                            <span class="rank-position">🥇</span>
+                            <div class="user-info">
+                                <div class="user-name">EcoWarrior Sarah</div>
+                                <div class="user-score">Score: 9,847 pts</div>
+                            </div>
+                            <span class="reduction-amount">-3.2 tons CO2</span>
+                        </div>
+                        
+                        <div class="ranking-item silver">
+                            <span class="rank-position">🥈</span>
+                            <div class="user-info">
+                                <div class="user-name">GreenThumb Mike</div>
+                                <div class="user-score">Score: 9,234 pts</div>
+                            </div>
+                            <span class="reduction-amount">-2.9 tons CO2</span>
+                        </div>
+                        
+                        <div class="ranking-item bronze">
+                            <span class="rank-position">🥉</span>
+                            <div class="user-info">
+                                <div class="user-name">ClimateChamp Lisa</div>
+                                <div class="user-score">Score: 8,976 pts</div>
+                            </div>
+                            <span class="reduction-amount">-2.7 tons CO2</span>
+                        </div>
+                        
+                        <div class="ranking-item">
+                            <span class="rank-position">4</span>
+                            <div class="user-info">
+                                <div class="user-name">SolarPower Jake</div>
+                                <div class="user-score">Score: 8,456 pts</div>
+                            </div>
+                            <span class="reduction-amount">-2.4 tons CO2</span>
+                        </div>
+                        
+                        <div class="ranking-item">
+                            <span class="rank-position">5</span>
+                            <div class="user-info">
+                                <div class="user-name">RecycleQueen Emma</div>
+                                <div class="user-score">Score: 8,123 pts</div>
+                            </div>
+                            <span class="reduction-amount">-2.2 tons CO2</span>
+                        </div>
+                        
+                        <div class="ranking-item">
+                            <span class="rank-position">6</span>
+                            <div class="user-info">
+                                <div class="user-name">BikeCommuter Tom</div>
+                                <div class="user-score">Score: 7,891 pts</div>
+                            </div>
+                            <span class="reduction-amount">-2.1 tons CO2</span>
+                        </div>
+                        
+                        <div class="ranking-item">
+                            <span class="rank-position">7</span>
+                            <div class="user-info">
+                                <div class="user-name">VeganVibes Alex</div>
+                                <div class="user-score">Score: 7,654 pts</div>
+                            </div>
+                            <span class="reduction-amount">-2.0 tons CO2</span>
+                        </div>
+                        
+                        <div class="ranking-item">
+                            <span class="rank-position">8</span>
+                            <div class="user-info">
+                                <div class="user-name">ZeroWaste Zoe</div>
+                                <div class="user-score">Score: 7,432 pts</div>
+                            </div>
+                            <span class="reduction-amount">-1.9 tons CO2</span>
+                        </div>
+                        
+                        <div class="ranking-item">
+                            <span class="rank-position">9</span>
+                            <div class="user-info">
+                                <div class="user-name">NatureNinja Nick</div>
+                                <div class="user-score">Score: 7,289 pts</div>
+                            </div>
+                            <span class="reduction-amount">-1.8 tons CO2</span>
+                        </div>
+                        
+                        <div class="ranking-item">
+                            <span class="rank-position">10</span>
+                            <div class="user-info">
+                                <div class="user-name">EcoExplorer Eva</div>
+                                <div class="user-score">Score: 7,156 pts</div>
+                            </div>
+                            <span class="reduction-amount">-1.7 tons CO2</span>
+                        </div>
+                        
+                        <div class="ranking-item" style="border: 3px solid var(--accent-yellow); background: rgba(240, 230, 140, 0.2);">
+                            <span class="rank-position">12</span>
+                            <div class="user-info">
+                                <div class="user-name">You (Demo User)</div>
+                                <div class="user-score">Score: 6,987 pts</div>
+                            </div>
+                            <span class="reduction-amount">-1.5 tons CO2</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userEmail');
+            window.location.href = 'index.html';
+        }
+
+        // Add bar growth animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes barGrow {
+                from { height: 0%; }
+                to { height: inherit; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Interactive task completion
+        document.querySelectorAll('.task-item input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const taskItem = this.parentElement;
+                if (this.checked) {
+                    taskItem.style.opacity = '0.7';
+                    taskItem.style.textDecoration = 'line-through';
+                    taskItem.style.background = 'rgba(143, 188, 143, 0.3)';
+                } else {
+                    taskItem.style.opacity = '1';
+                    taskItem.style.textDecoration = 'none';
+                    taskItem.style.background = 'rgba(143, 188, 143, 0.1)';
+                }
+            });
+        });
+
+        // Add hover effects to action buttons
+        document.querySelectorAll('a[href]').forEach(link => {
+            if (link.style.background) {
+                link.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px)';
+                    this.style.boxShadow = '0 10px 20px rgba(0,0,0,0.2)';
+                });
+                
+                link.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            }
+        });
+
+        // Animate ranking items on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'rankSlideIn 0.6s ease-out';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.ranking-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Dynamic greeting based on time
+        const currentHour = new Date().getHours();
+        let greeting = 'Welcome to Your Eco Dashboard! 🌍';
+        
+        if (currentHour < 12) {
+            greeting = 'Good Morning, Eco Warrior! 🌅';
+        } else if (currentHour < 18) {
+            greeting = 'Good Afternoon, Green Champion! ☀️';
+        } else {
+            greeting = 'Good Evening, Earth Guardian! 🌙';
+        }
+        
+        document.querySelector('h1').textContent = greeting;
+    </script>
+</body>
+</html>

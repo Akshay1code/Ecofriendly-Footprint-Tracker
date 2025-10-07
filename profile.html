@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoFootprint Calculator - Profile Settings</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Floating Leaves Animation -->
+    <div class="floating-leaves">
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+    </div>
+
+    <div class="dashboard">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <a href="dashboard.html" class="logo">EcoFootprint</a>
+                <ul class="nav-links">
+                    <li><a href="dashboard.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="profile.html" class="active">Profile Settings</a></li>
+                    <li><a href="#" onclick="logout()" style="color: #F0E68C;">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Profile Content -->
+        <div class="main-content" style="max-width: 1000px; margin: 0 auto;">
+            <main class="main-section">
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <h1 style="color: var(--primary-green); font-size: 2.5em; margin-bottom: 20px; animation: titleGlow 2s ease-in-out infinite alternate;">
+                        ⚙️ Profile Settings
+                    </h1>
+                    <p style="font-size: 1.2em; color: var(--secondary-green);">
+                        Manage your account and customize your eco-friendly experience
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px;">
+                    
+                    <!-- Personal Information -->
+                    <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                        <h3 style="color: var(--primary-green); margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
+                            👤 Personal Information
+                        </h3>
+                        
+                        <form id="personalForm" onsubmit="updatePersonalInfo(event)">
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Full Name</label>
+                                <input type="text" id="fullName" value="Demo User" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Email</label>
+                                <input type="email" id="email" value="demo@ecofootprint.com" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Location</label>
+                                <select id="location" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
+                                    <option value="us">United States</option>
+                                    <option value="ca">Canada</option>
+                                    <option value="uk">United Kingdom</option>
+                                    <option value="eu">European Union</option>
+                                    <option value="au">Australia</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Birth Date</label>
+                                <input type="date" id="birthDate" value="1990-01-01" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
+                            </div>
+                            
+                            <button type="submit" style="width: 100%; padding: 15px; background: linear-gradient(45deg, var(--secondary-green), var(--primary-green)); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
+                                💾 Update Information
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Account Security -->
+                    <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                        <h3 style="color: var(--primary-green); margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
+                            🔒 Account Security
+                        </h3>
+                        
+                        <form id="securityForm" onsubmit="updatePassword(event)">
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Current Password</label>
+                                <input type="password" id="currentPassword" placeholder="Enter current password" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">New Password</label>
+                                <input type="password" id="newPassword" placeholder="Enter new password" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Confirm New Password</label>
+                                <input type="password" id="confirmPassword" placeholder="Confirm new password" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
+                            </div>
+                            
+                            <button type="submit" style="width: 100%; padding: 15px; background: linear-gradient(45deg, var(--secondary-green), var(--primary-green)); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; margin-bottom: 15px;">
+                                🔑 Update Password
+                            </button>
+                        </form>
+                        
+                        <div style="padding: 15px; background: rgba(143, 188, 143, 0.1); border-radius: 8px; margin-top: 20px;">
+                            <p style="color: var(--secondary-green); font-size: 14px; margin: 0;">
+                                <strong>Security Tips:</strong><br>
+                                • Use at least 8 characters<br>
+                                • Include numbers and symbols<br>
+                                • Don't reuse passwords from other sites
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Notification Preferences -->
+                    <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                        <h3 style="color: var(--primary-green); margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
+                            🔔 Notifications
+                        </h3>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(143, 188, 143, 0.3);">
+                                <div>
+                                    <div style="font-weight: 500; color: var(--dark-green);">Weekly Reports</div>
+                                    <div style="font-size: 14px; color: var(--secondary-green);">Receive weekly carbon footprint summaries</div>
+                                </div>
+                                <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
+                                    <input type="checkbox" id="weeklyReports" checked style="opacity: 0; width: 0; height: 0;">
+                                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--light-green); transition: .4s; border-radius: 34px;"></span>
+                                    <span style="position: absolute; content: ''; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;"></span>
+                                </label>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(143, 188, 143, 0.3);">
+                                <div>
+                                    <div style="font-weight: 500; color: var(--dark-green);">Achievement Alerts</div>
+                                    <div style="font-size: 14px; color: var(--secondary-green);">Get notified when you unlock achievements</div>
+                                </div>
+                                <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
+                                    <input type="checkbox" id="achievementAlerts" checked style="opacity: 0; width: 0; height: 0;">
+                                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--light-green); transition: .4s; border-radius: 34px;"></span>
+                                    <span style="position: absolute; content: ''; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;"></span>
+                                </label>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(143, 188, 143, 0.3);">
+                                <div>
+                                    <div style="font-weight: 500; color: var(--dark-green);">Eco Tips</div>
+                                    <div style="font-size: 14px; color: var(--secondary-green);">Daily eco-friendly tips and suggestions</div>
+                                </div>
+                                <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
+                                    <input type="checkbox" id="ecoTips" checked style="opacity: 0; width: 0; height: 0;">
+                                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--light-green); transition: .4s; border-radius: 34px;"></span>
+                                    <span style="position: absolute; content: ''; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;"></span>
+                                </label>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
+                                <div>
+                                    <div style="font-weight: 500; color: var(--dark-green);">Marketing Emails</div>
+                                    <div style="font-size: 14px; color: var(--secondary-green);">Updates about new features and promotions</div>
+                                </div>
+                                <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
+                                    <input type="checkbox" id="marketingEmails" style="opacity: 0; width: 0; height: 0;">
+                                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+                                    <span style="position: absolute; content: ''; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Privacy Settings -->
+                    <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                        <h3 style="color: var(--primary-green); margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
+                            🔐 Privacy & Data
+                        </h3>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="color: var(--dark-green); margin-bottom: 10px;">Profile Visibility</h4>
+                            <select id="profileVisibility" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
+                                <option value="public">Public - Visible to all users</option>
+                                <option value="friends">Friends Only - Visible to connected users</option>
+                                <option value="private" selected>Private - Only visible to you</option>
+                            </select>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="color: var(--dark-green); margin-bottom: 10px;">Data Sharing</h4>
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <input type="checkbox" id="shareAnonymousData" checked style="transform: scale(1.2);">
+                                <label for="shareAnonymousData" style="color: var(--secondary-green);">Share anonymous usage data to improve the platform</label>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox" id="shareResearchData" style="transform: scale(1.2);">
+                                <label for="shareResearchData" style="color: var(--secondary-green);">Participate in climate research studies</label>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 30px; padding: 20px; background: rgba(255, 235, 59, 0.1); border-left: 4px solid var(--accent-yellow); border-radius: 8px;">
+                            <h4 style="color: var(--dark-green); margin-bottom: 10px;">Data Export & Deletion</h4>
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <button onclick="exportData()" style="padding: 8px 16px; background: var(--light-green); color: white; border: none; border-radius: 20px; cursor: pointer; font-size: 14px;">
+                                    📥 Export My Data
+                                </button>
+                                <button onclick="deleteAccount()" style="padding: 8px 16px; background: #dc3545; color: white; border: none; border-radius: 20px; cursor: pointer; font-size: 14px;">
+                                    🗑️ Delete Account
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Goals & Preferences -->
+                    <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                        <h3 style="color: var(--primary-green); margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
+                            🎯 Environmental Goals
+                        </h3>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Annual Carbon Reduction Goal (%)</label>
+                            <input type="range" id="reductionGoal" min="5" max="50" value="25" style="width: 100%; margin-bottom: 10px;">
+                            <div style="text-align: center; color: var(--secondary-green); font-weight: bold;">
+                                <span id="goalValue">25</span>% reduction from baseline
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Primary Focus Areas</label>
+                            <div style="display: grid; gap: 10px;">
+                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                    <input type="checkbox" checked style="transform: scale(1.2);">
+                                    <span style="color: var(--secondary-green);">🚗 Transportation</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                    <input type="checkbox" checked style="transform: scale(1.2);">
+                                    <span style="color: var(--secondary-green);">🏠 Home Energy</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                    <input type="checkbox" style="transform: scale(1.2);">
+                                    <span style="color: var(--secondary-green);">🍽️ Diet & Food</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                    <input type="checkbox" style="transform: scale(1.2);">
+                                    <span style="color: var(--secondary-green);">🛒 Consumption</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Reminder Frequency</label>
+                            <select id="reminderFrequency" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
+                                <option value="daily">Daily</option>
+                                <option value="weekly" selected>Weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="never">Never</option>
+                            </select>
+                        </div>
+                        
+                        <button onclick="saveGoals()" style="width: 100%; padding: 15px; background: linear-gradient(45deg, var(--secondary-green), var(--primary-green)); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
+                            🎯 Save Goals
+                        </button>
+                    </div>
+
+                    <!-- Account Statistics -->
+                    <div style="background: linear-gradient(135deg, var(--secondary-green), var(--primary-green)); padding: 30px; border-radius: 15px; color: white;">
+                        <h3 style="color: var(--accent-yellow); margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
+                            📊 Account Statistics
+                        </h3>
+                        
+                        <div style="display: grid; gap: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Member Since:</span>
+                                <span style="font-weight: bold;">January 2024</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Calculations Completed:</span>
+                                <span style="font-weight: bold;">47</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Achievements Unlocked:</span>
+                                <span style="font-weight: bold;">12 / 25</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>CO2 Reduced:</span>
+                                <span style="font-weight: bold; color: var(--accent-yellow);">2.5 tons</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Current Ranking:</span>
+                                <span style="font-weight: bold; color: var(--accent-yellow);">#12 Global</span>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 25px; text-align: center;">
+                            <a href="dashboard.html" style="background: var(--accent-yellow); color: var(--dark-green); padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-block;">
+                                🏠 Back to Dashboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userEmail');
+            window.location.href = 'index.html';
+        }
+
+        // Update personal information
+        function updatePersonalInfo(event) {
+            event.preventDefault();
+            const button = event.target.querySelector('button');
+            const originalText = button.innerHTML;
+            
+            button.innerHTML = '💾 Updating...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.innerHTML = '✅ Updated!';
+                button.style.background = 'linear-gradient(45deg, var(--light-green), var(--accent-yellow))';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = 'linear-gradient(45deg, var(--secondary-green), var(--primary-green))';
+                    button.disabled = false;
+                }, 2000);
+            }, 1500);
+        }
+
+        // Update password
+        function updatePassword(event) {
+            event.preventDefault();
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const button = event.target.querySelector('button');
+            
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                alert('Please fill in all password fields.');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                alert('New passwords do not match.');
+                return;
+            }
+            
+            if (newPassword.length < 8) {
+                alert('Password must be at least 8 characters long.');
+                return;
+            }
+            
+            button.innerHTML = '🔑 Updating...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.innerHTML = '✅ Password Updated!';
+                button.style.background = 'linear-gradient(45deg, var(--light-green), var(--accent-yellow))';
+                
+                // Clear password fields
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+                
+                setTimeout(() => {
+                    button.innerHTML = '🔑 Update Password';
+                    button.style.background = 'linear-gradient(45deg, var(--secondary-green), var(--primary-green))';
+                    button.disabled = false;
+                }, 2000);
+            }, 1500);
+        }
+
+        // Save environmental goals
+        function saveGoals() {
+            const button = event.target;
+            const originalText = button.innerHTML;
+            
+            button.innerHTML = '🎯 Saving...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.innerHTML = '✅ Goals Saved!';
+                button.style.background = 'linear-gradient(45deg, var(--light-green), var(--accent-yellow))';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = 'linear-gradient(45deg, var(--secondary-green), var(--primary-green))';
+                    button.disabled = false;
+                }, 2000);
+            }, 1500);
+        }
+
+        // Export user data
+        function exportData() {
+            alert('Your data export has been prepared and will be sent to your email within 24 hours. 📥');
+        }
+
+        // Delete account (with confirmation)
+        function deleteAccount() {
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                if (confirm('This will permanently delete all your data, including calculations, achievements, and profile information. Continue?')) {
+                    alert('Account deletion request submitted. You will receive a confirmation email shortly. 🗑️');
+                }
+            }
+        }
+
+        // Initialize toggle switches
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle toggle switches
+            const toggles = document.querySelectorAll('input[type="checkbox"]');
+            toggles.forEach(toggle => {
+                const slider = toggle.nextElementSibling;
+                if (slider && slider.tagName === 'SPAN') {
+                    updateToggleState(toggle);
+                    
+                    toggle.addEventListener('change', function() {
+                        updateToggleState(this);
+                    });
+                }
+            });
+
+            // Update reduction goal display
+            const goalSlider = document.getElementById('reductionGoal');
+            const goalValue = document.getElementById('goalValue');
+            
+            goalSlider.addEventListener('input', function() {
+                goalValue.textContent = this.value;
+            });
+
+            // Add hover effects to buttons
+            const buttons = document.querySelectorAll('button, input[type="submit"]');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    if (!this.disabled) {
+                        this.style.transform = 'translateY(-2px)';
+                        this.style.boxShadow = '0 8px 20px rgba(0,0,0,0.2)';
+                    }
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+        });
+
+        function updateToggleState(toggle) {
+            const slider = toggle.nextElementSibling;
+            const knob = slider.nextElementSibling;
+            
+            if (toggle.checked) {
+                slider.style.backgroundColor = 'var(--secondary-green)';
+                knob.style.transform = 'translateX(26px)';
+            } else {
+                slider.style.backgroundColor = '#ccc';
+                knob.style.transform = 'translateX(0px)';
+            }
+        }
+
+        // Add form validation
+        document.getElementById('personalForm').addEventListener('input', function(e) {
+            const input = e.target;
+            if (input.type === 'email') {
+                if (input.value && !input.value.includes('@')) {
+                    input.style.borderColor = '#dc3545';
+                } else {
+                    input.style.borderColor = 'var(--light-green)';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

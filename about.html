@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoFootprint Calculator - About Us</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Floating Leaves Animation -->
+    <div class="floating-leaves">
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+    </div>
+
+    <div class="dashboard">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <a href="dashboard.html" class="logo">EcoFootprint</a>
+                <ul class="nav-links">
+                    <li><a href="dashboard.html">Home</a></li>
+                    <li><a href="about.html" class="active">About</a></li>
+                    <li><a href="profile.html">Profile Settings</a></li>
+                    <li><a href="#" onclick="logout()" style="color: #F0E68C;">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- About Content -->
+        <div class="main-content" style="max-width: 1000px; margin: 0 auto;">
+            <main class="main-section">
+                <div style="text-align: center; margin-bottom: 50px;">
+                    <h1 style="color: var(--primary-green); font-size: 3em; margin-bottom: 20px; animation: titleGlow 2s ease-in-out infinite alternate;">
+                        🌍 About EcoFootprint
+                    </h1>
+                    <p style="font-size: 1.3em; color: var(--secondary-green); line-height: 1.6;">
+                        Empowering individuals to understand and reduce their environmental impact through personalized carbon footprint tracking and actionable insights.
+                    </p>
+                </div>
+
+                <!-- Mission Section -->
+                <div style="background: linear-gradient(135deg, var(--light-green), var(--accent-yellow)); padding: 40px; border-radius: 20px; margin: 30px 0; animation: fadeInUp 1s ease-out;">
+                    <h2 style="color: var(--dark-green); font-size: 2.2em; margin-bottom: 20px; text-align: center;">
+                        🎯 Our Mission
+                    </h2>
+                    <p style="font-size: 1.1em; line-height: 1.8; color: var(--dark-green); text-align: center; max-width: 800px; margin: 0 auto;">
+                        To make environmental consciousness accessible and actionable for everyone. We believe that by understanding our carbon footprint, we can make informed decisions that collectively contribute to a more sustainable future for our planet.
+                    </p>
+                </div>
+
+                <!-- Features Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 50px 0;">
+                    <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s ease;">
+                        <div style="font-size: 3em; margin-bottom: 20px;">🧮</div>
+                        <h3 style="color: var(--primary-green); margin-bottom: 15px;">Accurate Calculator</h3>
+                        <p style="color: var(--secondary-green); line-height: 1.6;">
+                            Our comprehensive calculator considers transportation, energy usage, diet, and lifestyle choices to provide precise carbon footprint measurements.
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s ease;">
+                        <div style="font-size: 3em; margin-bottom: 20px;">💡</div>
+                        <h3 style="color: var(--primary-green); margin-bottom: 15px;">Personalized Tips</h3>
+                        <p style="color: var(--secondary-green); line-height: 1.6;">
+                            Receive tailored recommendations based on your lifestyle and habits to effectively reduce your environmental impact.
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s ease;">
+                        <div style="font-size: 3em; margin-bottom: 20px;">📈</div>
+                        <h3 style="color: var(--primary-green); margin-bottom: 15px;">Progress Tracking</h3>
+                        <p style="color: var(--secondary-green); line-height: 1.6;">
+                            Monitor your improvement over time with detailed analytics and celebrate your achievements along the way.
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s ease;">
+                        <div style="font-size: 3em; margin-bottom: 20px;">🏆</div>
+                        <h3 style="color: var(--primary-green); margin-bottom: 15px;">Gamification</h3>
+                        <p style="color: var(--secondary-green); line-height: 1.6;">
+                            Earn achievements, compete with friends, and stay motivated through our engaging reward system.
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s ease;">
+                        <div style="font-size: 3em; margin-bottom: 20px;">🌱</div>
+                        <h3 style="color: var(--primary-green); margin-bottom: 15px;">Community Impact</h3>
+                        <p style="color: var(--secondary-green); line-height: 1.6;">
+                            Join a community of eco-conscious individuals working together to create positive environmental change.
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s ease;">
+                        <div style="font-size: 3em; margin-bottom: 20px;">📊</div>
+                        <h3 style="color: var(--primary-green); margin-bottom: 15px;">Data Insights</h3>
+                        <p style="color: var(--secondary-green); line-height: 1.6;">
+                            Gain valuable insights into your environmental impact with detailed breakdowns and comparative analysis.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Why It Matters Section -->
+                <div style="background: rgba(45, 80, 22, 0.95); color: white; padding: 40px; border-radius: 20px; margin: 50px 0; backdrop-filter: blur(10px);">
+                    <h2 style="color: var(--accent-yellow); font-size: 2.2em; margin-bottom: 25px; text-align: center;">
+                        🌟 Why Carbon Footprint Matters
+                    </h2>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 30px;">
+                        <div>
+                            <h4 style="color: var(--accent-yellow); margin-bottom: 15px;">🌡️ Climate Change</h4>
+                            <p style="line-height: 1.6;">
+                                Individual carbon emissions contribute to global warming. By reducing our footprint, we help limit temperature rise and protect ecosystems.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: var(--accent-yellow); margin-bottom: 15px;">🏠 Personal Responsibility</h4>
+                            <p style="line-height: 1.6;">
+                                Understanding our impact helps us make informed decisions about transportation, energy use, diet, and consumption patterns.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: var(--accent-yellow); margin-bottom: 15px;">💰 Cost Savings</h4>
+                            <p style="line-height: 1.6;">
+                                Reducing energy consumption, driving less, and making sustainable choices often leads to significant cost savings.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: var(--accent-yellow); margin-bottom: 15px;">🌍 Future Generations</h4>
+                            <p style="line-height: 1.6;">
+                                Taking action today ensures a healthier planet for our children and future generations to enjoy and thrive.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Section -->
+                <div style="text-align: center; margin: 50px 0;">
+                    <h2 style="color: var(--primary-green); font-size: 2.2em; margin-bottom: 30px;">
+                        📊 Environmental Impact Statistics
+                    </h2>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div style="background: linear-gradient(135deg, var(--secondary-green), var(--light-green)); padding: 25px; border-radius: 15px; color: white;">
+                            <div style="font-size: 2.5em; font-weight: bold; margin-bottom: 10px;">2 tons</div>
+                            <div>Average India carbon footprint per year</div>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, var(--light-green), var(--accent-yellow)); padding: 25px; border-radius: 15px; color: var(--dark-green);">
+                            <div style="font-size: 2.5em; font-weight: bold; margin-bottom: 10px;">4.8 tons</div>
+                            <div>Global average carbon footprint</div>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, var(--primary-green), var(--secondary-green)); padding: 25px; border-radius: 15px; color: white;">
+                            <div style="font-size: 2.5em; font-weight: bold; margin-bottom: 10px;">0 tons</div>
+                            <div>Target for 2070 (Panchamrit Agreement)</div>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, var(--accent-yellow), var(--light-green)); padding: 25px; border-radius: 15px; color: var(--dark-green);">
+                            <div style="font-size: 2.5em; font-weight: bold; margin-bottom: 10px;">30%</div>
+                            <div>Potential reduction through lifestyle changes</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div style="background: linear-gradient(135deg, var(--secondary-green), var(--primary-green)); padding: 40px; border-radius: 20px; text-align: center; color: white; margin: 50px 0;">
+                    <h2 style="color: var(--accent-yellow); margin-bottom: 20px; font-size: 2.2em;">
+                        🚀 Start Your Eco Journey Today
+                    </h2>
+                    <p style="font-size: 1.2em; margin-bottom: 30px; line-height: 1.6;">
+                        Every small action counts. Calculate your carbon footprint and discover how you can make a positive impact on our planet.
+                    </p>
+                    
+                    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                        <a href="calculator.html" style="background: var(--accent-yellow); color: var(--dark-green); padding: 15px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: all 0.3s ease; display: inline-block;">
+                            🧮 Calculate My Footprint
+                        </a>
+                        <a href="dashboard.html" style="background: rgba(255,255,255,0.2); color: white; padding: 15px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: all 0.3s ease; display: inline-block; border: 2px solid white;">
+                            🏠 Back to Dashboard
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div style="text-align: center; margin: 40px 0; padding: 30px; background: rgba(255,255,255,0.9); border-radius: 15px;">
+                    <h3 style="color: var(--primary-green); margin-bottom: 20px;">📞 Get in Touch</h3>
+                    <p style="color: var(--secondary-green); margin-bottom: 15px;">
+                        Have questions or suggestions? We'd love to hear from you!
+                    </p>
+                    <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 20px;">
+                        <div style="color: var(--secondary-green);">
+                            📧 <strong>Email:</strong> info@ecofootprint.com
+                        </div>
+                        <div style="color: var(--secondary-green);">
+                            🐦 <strong>Twitter:</strong> @EcoFootprint
+                        </div>
+                        <div style="color: var(--secondary-green);">
+                            💬 <strong>Support:</strong> help@ecofootprint.com
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userEmail');
+            window.location.href = 'index.html';
+        }
+
+        // Add hover effects to feature cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('[style*="transition: transform"]');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                    this.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+                });
+            });
+
+            // Add scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 1s ease-out';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all major sections
+            document.querySelectorAll('main > div').forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+        // Add button hover effects
+        document.querySelectorAll('a[href]').forEach(link => {
+            if (link.style.background && link.style.background.includes('var(--')) {
+                link.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px)';
+                    this.style.boxShadow = '0 10px 25px rgba(0,0,0,0.3)';
+                });
+                
+                link.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

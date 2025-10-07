@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoFootprint Calculator - Calculate Your Impact</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Floating Leaves Animation -->
+    <div class="floating-leaves">
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+    </div>
+
+    <div class="dashboard">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <a href="dashboard.html" class="logo">EcoFootprint</a>
+                <ul class="nav-links">
+                    <li><a href="dashboard.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="profile.html">Profile Settings</a></li>
+                    <li><a href="#" onclick="logout()" style="color: #F0E68C;">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Calculator Container -->
+        <div class="calculator-container">
+            <div class="calculator-form">
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <h1 style="color: var(--primary-green); font-size: 2.5em; margin-bottom: 15px;">
+                        🧮 Carbon Footprint Calculator
+                    </h1>
+                    <p style="color: var(--secondary-green); font-size: 1.2em;">
+                        Calculate your environmental impact and discover ways to reduce it
+                    </p>
+                </div>
+
+                <form id="calculatorForm" onsubmit="calculateFootprint(event)">
+                    <!-- Transportation Section -->
+                    <div class="form-section">
+                        <h3>🚗 Transportation</h3>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="carMiles">Car Kms per Week</label>
+                                <input type="number" id="carMiles" min="0" step="0.1" placeholder="Enter kms driven">
+                            </div>
+                            <div class="input-group">
+                                <label for="carType">Vehicle Type</label>
+                                <select id="carType">
+                                    <option value="gasoline">Petrol Car</option>
+                                    <option value="hybrid">Hybrid Car</option>
+                                    <option value="electric">Electric Car</option>
+                                    <option value="diesel">Diesel Car</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="publicTransport">Public Transport Hours per Week</label>
+                                <input type="number" id="publicTransport" min="0" step="0.1" placeholder="Bus, train, metro hours">
+                            </div>
+                            <div class="input-group">
+                                <label for="flights">Flights per Year</label>
+                                <input type="number" id="flights" min="0" placeholder="Number of flights">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Energy & Home Section -->
+                    <div class="form-section">
+                        <h3>🏠 Energy & Home</h3>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="electricity">Monthly Electricity (kWh)</label>
+                                <input type="number" id="electricity" min="0" step="1" placeholder="Check your utility bill">
+                            </div>
+                            <div class="input-group">
+                                <label for="heating">Heating Type</label>
+                                <select id="heating">
+                                    <option value="natural_gas">Natural Gas</option>
+                                    <option value="electricity">Electric Heating</option>
+                                    <option value="oil">Oil Heating</option>
+                                    <option value="solar">Solar/Renewable</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="homeSize">Home Size (sq ft)</label>
+                                <input type="number" id="homeSize" min="0" placeholder="Approximate square footage">
+                            </div>
+                            <div class="input-group">
+                                <label for="householdSize">Household Members</label>
+                                <input type="number" id="householdSize" min="1" max="20" value="1" placeholder="Number of people">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Food & Diet Section -->
+                    <div class="form-section">
+                        <h3>🍽️ Food & Diet</h3>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="dietType">Diet Type</label>
+                                <select id="dietType">
+                                    <option value="omnivore">Omnivore (meat daily)</option>
+                                    <option value="moderate_meat">Moderate Meat Eater</option>
+                                    <option value="low_meat">Low Meat Diet</option>
+                                    <option value="pescatarian">Pescatarian</option>
+                                    <option value="vegetarian">Vegetarian</option>
+                                    <option value="vegan">Vegan</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="localFood">Local Food Percentage</label>
+                                <select id="localFood">
+                                    <option value="0">0-25% Local</option>
+                                    <option value="25">25-50% Local</option>
+                                    <option value="50">50-75% Local</option>
+                                    <option value="75">75-100% Local</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="foodWaste">Food Waste Level</label>
+                                <select id="foodWaste">
+                                    <option value="high">High (throw away 30%+)</option>
+                                    <option value="medium">Medium (throw away 10-30%)</option>
+                                    <option value="low">Low (throw away <10%)</option>
+                                    <option value="minimal">Minimal (compost/use all)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="organicFood">Organic Food Percentage</label>
+                                <select id="organicFood">
+                                    <option value="0">0-25% Organic</option>
+                                    <option value="25">25-50% Organic</option>
+                                    <option value="50">50-75% Organic</option>
+                                    <option value="75">75-100% Organic</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Consumption & Waste Section -->
+                    <div class="form-section">
+                        <h3>🛒 Consumption & Waste</h3>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="shopping">Shopping Frequency</label>
+                                <select id="shopping">
+                                    <option value="high">High (weekly new items)</option>
+                                    <option value="medium">Medium (monthly new items)</option>
+                                    <option value="low">Low (buy only when needed)</option>
+                                    <option value="minimal">Minimal (second-hand/repair)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="recycling">Recycling Habits</label>
+                                <select id="recycling">
+                                    <option value="none">Don't recycle</option>
+                                    <option value="some">Recycle some items</option>
+                                    <option value="most">Recycle most items</option>
+                                    <option value="all">Recycle everything possible</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="waterUsage">Daily Water Usage</label>
+                                <select id="waterUsage">
+                                    <option value="high">High (long showers, baths)</option>
+                                    <option value="medium">Medium (standard usage)</option>
+                                    <option value="low">Low (short showers, conservation)</option>
+                                    <option value="minimal">Minimal (very conscious usage)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="paperUsage">Paper & Digital Usage</label>
+                                <select id="paperUsage">
+                                    <option value="high">High paper usage</option>
+                                    <option value="medium">Mixed paper/digital</option>
+                                    <option value="low">Mostly digital</option>
+                                    <option value="minimal">Paperless lifestyle</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculate Button -->
+                    <button type="submit" class="calculate-btn">
+                        🌍 Calculate My Carbon Footprint
+                    </button>
+                </form>
+
+                <!-- Results Display -->
+                <div id="results" class="result-display" style="display: none;">
+                    <h3>Your Carbon Footprint Results</h3>
+                    <div id="resultContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userEmail');
+            window.location.href = 'index.html';
+        }
+
+        // Carbon footprint calculation function
+        function calculateFootprint(event) {
+            event.preventDefault();
+
+            const calculateBtn = event.target.querySelector('.calculate-btn');
+            calculateBtn.innerHTML = '🔄 Calculating...';
+            calculateBtn.disabled = true;
+
+            // Simulate calculation delay for better UX
+            setTimeout(() => {
+                // Get form values
+                const carMiles = parseFloat(document.getElementById('carMiles').value) || 0;
+                const carType = document.getElementById('carType').value;
+                const publicTransport = parseFloat(document.getElementById('publicTransport').value) || 0;
+                const flights = parseFloat(document.getElementById('flights').value) || 0;
+                const electricity = parseFloat(document.getElementById('electricity').value) || 0;
+                const heating = document.getElementById('heating').value;
+                const homeSize = parseFloat(document.getElementById('homeSize').value) || 0;
+                const householdSize = parseFloat(document.getElementById('householdSize').value) || 1;
+                const dietType = document.getElementById('dietType').value;
+                const localFood = parseInt(document.getElementById('localFood').value) || 0;
+                const foodWaste = document.getElementById('foodWaste').value;
+                const organicFood = parseInt(document.getElementById('organicFood').value) || 0;
+                const shopping = document.getElementById('shopping').value;
+                const recycling = document.getElementById('recycling').value;
+                const waterUsage = document.getElementById('waterUsage').value;
+                const paperUsage = document.getElementById('paperUsage').value;
+
+                // Carbon footprint calculation (simplified formula)
+                let annualCO2 = 0;
+
+                // Transportation calculations
+                const carMultipliers = {
+                    gasoline: 0.89, // lbs CO2 per mile
+                    hybrid: 0.45,
+                    electric: 0.2,
+                    diesel: 1.05
+                };
+                annualCO2 += (carMiles * 52 * carMultipliers[carType]) / 2204.62; // Convert to tons
+
+                // Public transport (average)
+                annualCO2 += (publicTransport * 52 * 0.33) / 2204.62; // lbs to tons
+
+                // Flights (average domestic flight = 1.9 tons CO2)
+                annualCO2 += flights * 1.9;
+
+                // Home energy
+                const electricityFactor = 0.92; // lbs CO2 per kWh (US average)
+                annualCO2 += (electricity * 12 * electricityFactor) / (2204.62 * householdSize);
+
+                // Heating adjustments
+                const heatingMultipliers = {
+                    natural_gas: 1.2,
+                    electricity: 1.0,
+                    oil: 1.5,
+                    solar: 0.1
+                };
+                const heatingCO2 = (homeSize * 0.05 * heatingMultipliers[heating]) / householdSize;
+                annualCO2 += heatingCO2;
+
+                // Diet calculations
+                const dietEmissions = {
+                    omnivore: 3.3,
+                    moderate_meat: 2.5,
+                    low_meat: 1.9,
+                    pescatarian: 1.6,
+                    vegetarian: 1.2,
+                    vegan: 0.8
+                };
+                let dietCO2 = dietEmissions[dietType];
+
+                // Adjust for local food
+                dietCO2 *= (1 - (localFood / 100) * 0.2);
+
+                // Adjust for food waste
+                const wasteMultipliers = {
+                    high: 1.3,
+                    medium: 1.1,
+                    low: 0.95,
+                    minimal: 0.8
+                };
+                dietCO2 *= wasteMultipliers[foodWaste];
+
+                // Adjust for organic food (slight reduction)
+                dietCO2 *= (1 - (organicFood / 100) * 0.1);
+
+                annualCO2 += dietCO2;
+
+                // Consumption and waste
+                const consumptionEmissions = {
+                    high: 2.5,
+                    medium: 1.8,
+                    low: 1.2,
+                    minimal: 0.6
+                };
+                annualCO2 += consumptionEmissions[shopping];
+
+                // Recycling benefits
+                const recyclingReductions = {
+                    none: 0,
+                    some: 0.3,
+                    most: 0.6,
+                    all: 1.0
+                };
+                annualCO2 -= recyclingReductions[recycling];
+
+                // Water usage
+                const waterEmissions = {
+                    high: 1.2,
+                    medium: 0.8,
+                    low: 0.5,
+                    minimal: 0.3
+                };
+                annualCO2 += waterEmissions[waterUsage];
+
+                // Paper usage
+                const paperEmissions = {
+                    high: 0.8,
+                    medium: 0.5,
+                    low: 0.2,
+                    minimal: 0.05
+                };
+                annualCO2 += paperEmissions[paperUsage];
+
+                // Ensure minimum positive value
+                annualCO2 = Math.max(annualCO2, 0.5);
+
+                // Calculate monthly and daily values
+                const monthlyCO2 = annualCO2 / 12;
+                const dailyCO2 = annualCO2 / 365;
+
+                // Comparison data (US average is about 16 tons CO2 per year)
+                const usAverage = 16;
+                const worldAverage = 4.8;
+
+                // Generate recommendations
+                const recommendations = generateRecommendations(annualCO2, carMiles, dietType, heating, recycling);
+
+                // Display results
+                displayResults(annualCO2, monthlyCO2, dailyCO2, usAverage, worldAverage, recommendations);
+
+                calculateBtn.innerHTML = '✅ Calculation Complete!';
+                calculateBtn.style.background = 'linear-gradient(45deg, var(--light-green), var(--accent-yellow))';
+
+                // Reset button after delay
+                setTimeout(() => {
+                    calculateBtn.innerHTML = '🌍 Calculate My Carbon Footprint';
+                    calculateBtn.style.background = 'linear-gradient(45deg, var(--secondary-green), var(--primary-green))';
+                    calculateBtn.disabled = false;
+                }, 3000);
+
+            }, 2000);
+        }
+
+        function generateRecommendations(footprint, carMiles, dietType, heating, recycling) {
+            const recommendations = [];
+
+            if (carMiles > 100) {
+                recommendations.push("🚲 Consider biking or walking for short trips to reduce car usage");
+                recommendations.push("🚌 Use public transportation more frequently");
+            }
+
+            if (dietType === 'omnivore') {
+                recommendations.push("🥗 Try 'Meatless Monday' to reduce dietary carbon footprint");
+            }
+
+            if (heating === 'oil' || heating === 'natural_gas') {
+                recommendations.push("🌡️ Consider upgrading to a programmable thermostat");
+                recommendations.push("🏠 Improve home insulation to reduce heating needs");
+            }
+
+            if (recycling === 'none' || recycling === 'some') {
+                recommendations.push("♻️ Increase recycling efforts - it can reduce footprint by up to 1 ton CO2/year");
+            }
+
+            if (footprint > 12) {
+                recommendations.push("💡 Switch to LED bulbs and energy-efficient appliances");
+                recommendations.push("🌱 Consider renewable energy options like solar panels");
+            }
+
+            recommendations.push("🌳 Plant trees or support reforestation projects");
+            recommendations.push("📱 Choose digital receipts and bills to reduce paper usage");
+
+            return recommendations.slice(0, 5); // Return top 5 recommendations
+        }
+
+        function displayResults(annual, monthly, daily, usAvg, worldAvg, recommendations) {
+            const resultsDiv = document.getElementById('results');
+            const resultContent = document.getElementById('resultContent');
+
+            const comparisonToUS = ((annual / usAvg) * 100).toFixed(1);
+            const comparisonToWorld = ((annual / worldAvg) * 100).toFixed(1);
+
+            let impactLevel = '';
+            let impactColor = '';
+            let impactEmoji = '';
+
+            if (annual <= 6) {
+                impactLevel = 'Excellent';
+                impactColor = '#4A7C59';
+                impactEmoji = '🌟';
+            } else if (annual <= 10) {
+                impactLevel = 'Good';
+                impactColor = '#8FBC8F';
+                impactEmoji = '👍';
+            } else if (annual <= 15) {
+                impactLevel = 'Average';
+                impactColor = '#F0E68C';
+                impactEmoji = '⚠️';
+            } else {
+                impactLevel = 'High';
+                impactColor = '#CD7F32';
+                impactEmoji = '🔺';
+            }
+
+            resultContent.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0;">
+                    <div style="background: linear-gradient(135deg, ${impactColor}, #ffffff); padding: 20px; border-radius: 15px; text-align: center;">
+                        <h4 style="margin: 0; color: var(--dark-green);">${impactEmoji} Impact Level</h4>
+                        <p style="font-size: 1.5em; font-weight: bold; margin: 5px 0; color: var(--dark-green);">${impactLevel}</p>
+                    </div>
+                    <div style="background: linear-gradient(135deg, var(--secondary-green), var(--light-green)); padding: 20px; border-radius: 15px; text-align: center; color: white;">
+                        <h4 style="margin: 0;">Annual Footprint</h4>
+                        <p style="font-size: 1.8em; font-weight: bold; margin: 5px 0;">${annual.toFixed(2)} tons CO2</p>
+                    </div>
+                    <div style="background: linear-gradient(135deg, var(--light-green), var(--accent-yellow)); padding: 20px; border-radius: 15px; text-align: center; color: var(--dark-green);">
+                        <h4 style="margin: 0;">Monthly Impact</h4>
+                        <p style="font-size: 1.5em; font-weight: bold; margin: 5px 0;">${monthly.toFixed(2)} tons CO2</p>
+                    </div>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.9); padding: 25px; border-radius: 15px; margin: 20px 0;">
+                    <h4 style="color: var(--primary-green); margin-bottom: 15px;">📊 How You Compare</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                        <div>
+                            <p><strong>Your footprint:</strong> ${annual.toFixed(2)} tons CO2/year</p>
+                            <p><strong>US Average:</strong> ${usAvg} tons CO2/year</p>
+                            <p style="color: ${annual < usAvg ? 'green' : 'orange'};">
+                                You emit ${comparisonToUS}% of the US average
+                            </p>
+                        </div>
+                        <div>
+                            <p><strong>World Average:</strong> ${worldAvg} tons CO2/year</p>
+                            <p><strong>Paris Agreement Goal:</strong> <2 tons CO2/year by 2030</p>
+                            <p style="color: ${annual < worldAvg ? 'green' : 'red'};">
+                                You emit ${comparisonToWorld}% of the world average
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.9); padding: 25px; border-radius: 15px; margin: 20px 0;">
+                    <h4 style="color: var(--primary-green); margin-bottom: 15px;">💡 Personalized Recommendations</h4>
+                    <div style="display: grid; gap: 10px;">
+                        ${recommendations.map(rec => `
+                            <div style="padding: 12px; background: rgba(143, 188, 143, 0.2); border-radius: 8px; border-left: 4px solid var(--secondary-green);">
+                                ${rec}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button onclick="saveResults()" style="background: var(--secondary-green); color: white; padding: 15px 30px; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; margin: 0 10px;">
+                        💾 Save Results
+                    </button>
+                    <button onclick="shareResults()" style="background: var(--accent-yellow); color: var(--dark-green); padding: 15px 30px; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; margin: 0 10px;">
+                        📤 Share Results
+                    </button>
+                    <a href="dashboard.html" style="background: var(--light-green); color: var(--dark-green); padding: 15px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-block; margin: 0 10px;">
+                        🏠 Back to Dashboard
+                    </a>
+                </div>
+            `;
+
+            resultsDiv.style.display = 'block';
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function saveResults() {
+            alert('Results saved to your profile! 💾');
+        }
+
+        function shareResults() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My Carbon Footprint Results',
+                    text: 'I just calculated my carbon footprint with EcoFootprint Calculator!',
+                    url: window.location.href
+                });
+            } else {
+                alert('Share your results on social media! 📤');
+            }
+        }
+
+        // Add input validation and helpful tooltips
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scrolling for form sections
+            document.querySelectorAll('.form-section').forEach((section, index) => {
+                section.style.animationDelay = `${index * 0.1}s`;
+                section.classList.add('fade-in');
+            });
+
+            // Add interactive help tooltips
+            const helpTexts = {
+                carMiles: "Include all driving: commuting, errands, road trips",
+                electricity: "Check your monthly utility bill for kWh usage",
+                homeSize: "Total heated/cooled square footage of your home",
+                flights: "Round-trip flights count as 2 flights"
+            };
+
+            Object.keys(helpTexts).forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    field.title = helpTexts[fieldId];
+                }
+            });
+        });
+    </script>
+</body>
+</html>
