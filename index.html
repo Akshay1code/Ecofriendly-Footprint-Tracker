@@ -53,15 +53,12 @@
         // Enhanced login functionality with animations
         function handleLogin(event) {
             event.preventDefault();
-            
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const loginBtn = event.target.querySelector('.login-btn');
-            
             // Add loading animation
             loginBtn.innerHTML = 'Logging in... 🌿';
             loginBtn.style.background = 'linear-gradient(45deg, #4A7C59, #8FBC8F)';
-            
             // Simulate login process with animation
             setTimeout(() => {
                 // Simple validation (in real app, this would be server-side)
