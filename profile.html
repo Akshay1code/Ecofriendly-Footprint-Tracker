@@ -1,13 +1,373 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoFootprint Calculator - Profile Settings</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🌿 Gamified Eco Profile Dashboard</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== Global Variables & Colors (Gamified Palette) ===== */
+        :root {
+            --primary-green: #2D5016; /* Deep Forest */
+            --secondary-green: #4A7C59; /* Moss Green */
+            --accent-gold: #FFD700; /* XP/Level Gold */
+            --light-bg: #F5FFF5; /* Very Light Green-White */
+            --dark-bg: #8FBC8F; /* Light Sage */
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-strong: rgba(45, 80, 22, 0.3);
+            --transition-fast: all 0.2s ease-in-out;
+            --transition-smooth: all 0.4s ease-in-out;
+        }
+
+        /* ===== Base Styles & Background ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--light-bg), var(--dark-bg));
+            color: var(--primary-green);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-top: 80px; /* offset for fixed navbar */
+        }
+
+        header {
+            width: 100%;
+            background: var(--primary-green);
+            color: var(--accent-gold);
+            padding: 1rem 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px var(--shadow-strong);
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Make navbar full-width and fixed on this page */
+        .navbar {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* ===== Profile Card - The Main Component ===== */
+        .profile-container {
+            background: var(--light-bg);
+            margin-top: 3rem;
+            padding: 2.5rem;
+            border-radius: 25px;
+            /* Added a subtle gold inner border for gamification */
+            box-shadow: 
+                0 15px 35px var(--shadow-strong), 
+                inset 0 0 0 4px var(--accent-gold); 
+            max-width: 950px;
+            width: 90%;
+            animation: fadeIn 1.2s ease-out;
+            position: relative;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px dashed rgba(45, 80, 22, 0.2);
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-pic {
+            width: 140px; /* Slightly larger */
+            height: 140px;
+            border-radius: 50%;
+            border: 5px solid var(--accent-gold); /* Gold frame */
+            outline: 5px solid var(--primary-green); /* Green outer ring */
+            object-fit: cover;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            transition: var(--transition-smooth);
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 10px 20px var(--shadow-strong);
+        }
+
+        .profile-info h2 {
+            font-size: 2.2rem;
+            color: var(--primary-green);
+            font-weight: 700;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Level tag for gamification */
+        .level-tag {
+            display: inline-block;
+            background: var(--secondary-green);
+            color: var(--accent-gold);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ===== XP Progress Bar (The Crown Jewel) ===== */
+        .progress-container {
+            margin-top: 1.5rem;
+            background: var(--secondary-green);
+            border-radius: 10px;
+            overflow: hidden;
+            height: 30px; /* Taller bar */
+            position: relative;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--accent-gold), #FFEB3B); /* Gold Gradient */
+            height: 100%;
+            width: 0; /* Start at 0 for animation */
+            border-radius: 10px;
+            transition: width 1.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            position: relative;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.7); /* Gold glow effect */
+        }
+        
+        /* Progress Text Overlay for better UX */
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--dark-green);
+            font-weight: 700;
+            font-size: 1rem;
+            z-index: 10;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+
+        /* ===== Stats Grid (The Trophies) ===== */
+        .stats-section {
+            margin-top: 2.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Better responsiveness */
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--light-bg);
+            border: 2px solid var(--secondary-green);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 10px var(--shadow-light);
+        }
+        
+        /* Subtle Corner decoration */
+        .stat-card::before {
+            content: '⭐';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 2rem;
+            opacity: 0.1;
+            transform: rotate(-20deg);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(45, 80, 22, 0.4);
+            border-color: var(--primary-green);
+        }
+
+        .stat-card h3 {
+            font-size: 1.1rem;
+            color: var(--secondary-green);
+            font-weight: 600;
+        }
+
+        .stat-card p {
+            font-size: 2rem; /* Larger value */
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-top: 0.3rem;
+            transition: color 0.3s;
+        }
+        
+        .stat-card:hover p {
+            color: var(--accent-gold); /* Value turns gold on hover */
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+
+        /* ===== Badges Section (Collectibles) ===== */
+        .badges-section {
+            margin-top: 3rem;
+        }
+
+        .badges-section h3 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary-green);
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .badge {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #66bb6a, var(--secondary-green));
+            border: 4px solid var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: var(--transition-fast);
+        }
+
+        .badge:hover {
+            transform: scale(1.15) rotate(-5deg);
+            background: radial-gradient(circle, #FFEB3B, var(--accent-gold)); /* Glow brighter on hover */
+        }
+        
+        /* New: Locked Badge Style */
+        .badge.locked {
+            background: var(--light-bg);
+            border-color: var(--secondary-green);
+            opacity: 0.5;
+            cursor: not-allowed;
+            filter: grayscale(100%);
+        }
+        .badge.locked:hover {
+            transform: none;
+            box-shadow: none;
+            filter: grayscale(100%);
+        }
+
+        /* ===== Buttons Section (Actions) ===== */
+        .action-buttons {
+            margin-top: 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            background: linear-gradient(90deg, var(--secondary-green), var(--primary-green));
+            color: var(--accent-gold);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px; /* Pill shape */
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            transition: var(--transition-fast);
+        }
+        
+        /* Unique button style for high contrast/importance */
+        .btn-gold {
+            background: linear-gradient(90deg, var(--accent-gold), #FFEB3B);
+            color: var(--primary-green);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.7);
+        }
+
+        .btn:hover {
+            background: linear-gradient(90deg, var(--primary-green), var(--dark-bg));
+            transform: translateY(-4px); /* Lift up */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+        .btn-gold:hover {
+            background: var(--accent-gold);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.9);
+        }
+
+
+        /* ===== Animations & Responsiveness (Kept and enhanced) ===== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+        
+        /* New: Level Up Animation */
+        @keyframes levelUp {
+            0% { color: white; transform: scale(1); }
+            50% { color: var(--accent-gold); transform: scale(1.2); }
+            100% { color: var(--accent-gold); transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 1.5rem;
+                margin-top: 2rem;
+            }
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            .profile-pic {
+                width: 100px;
+                height: 100px;
+                outline-width: 3px;
+                border-width: 3px;
+            }
+            .profile-info h2 {
+                font-size: 1.8rem;
+            }
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <!-- Floating Leaves Animation -->
     <div class="floating-leaves">
         <div class="leaf"></div>
         <div class="leaf"></div>
@@ -19,474 +379,89 @@
         <div class="leaf"></div>
     </div>
 
-    <div class="dashboard">
-        <!-- Navigation Bar -->
-        <nav class="navbar">
-            <div class="nav-content">
-                <a href="dashboard.html" class="logo">EcoFootprint</a>
-                <ul class="nav-links">
-                    <li><a href="dashboard.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="profile.html" class="active">Profile Settings</a></li>
-                    <li><a href="#" onclick="logout()" style="color: #F0E68C;">Logout</a></li>
-                </ul>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="dashboard.html" class="logo">
+                <span>EcoFootprint Tracker</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="profile.html" class="active">Profile Settings</a></li>
+                <li><a href="javascript:void(0)" onclick="logout(); return false;" style="color: #F0E68C;">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <img 
+                src="./images/profilelogo.png" 
+                alt="Profile Picture" 
+                class="profile-pic" 
+            />
+            <div class="profile-info">
+                <h2>Demo User</h2>
+                <p class="level-tag">Eco Master • Level 12</p>
             </div>
-        </nav>
+        </div>
 
-        <!-- Profile Content -->
-        <div class="main-content" style="max-width: 1000px; margin: 0 auto;height: 5800px;">
-            <main class="main-section">
-                <div style="text-align: center; margin-bottom: 40px;">
-                    <h1 style="color: var(--primary-green); font-size: 2.5em; margin-bottom: 20px; animation: titleGlow 2s ease-in-out infinite alternate;">
-                        ⚙️ Profile Settings
-                    </h1>
-                    <p style="font-size: 1.2em; color: var(--secondary-green);">
-                        Manage your account and customize your eco-friendly experience
-                    </p>
-                </div>
+        <div class="progress-container">
+            <div class="progress-bar" style="width: 70%;" id="xp-bar-visual"></div>
+            <div class="progress-text" id="xp-text-label">XP: 840 / 1200</div>
+        </div>
+        
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px;">
-                    
-                    <!-- Personal Information -->
-                    <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-                        <h3 style="color: var(--primary-green); margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
-                            👤 Personal Information
-                        </h3>
-                        
-                        <form id="personalForm" onsubmit="updatePersonalInfo(event)">
-                            <div style="margin-bottom: 20px;">
-                                <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Full Name</label>
-                                <input type="text" id="fullName" value="Demo User" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
-                            </div>
-                            
-                            <div style="margin-bottom: 20px;">
-                                <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Email</label>
-                                <input type="email" id="email" value="demo@ecofootprint.com" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
-                            </div>
-                            
-                            <div style="margin-bottom: 20px;">
-                                <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Location</label>
-                                <select id="location" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
-                                    <option value="us">United States</option>
-                                    <option value="ca">Canada</option>
-                                    <option value="uk">United Kingdom</option>
-                                    <option value="eu">European Union</option>
-                                    <option value="au">Australia</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                            
-                            <div style="margin-bottom: 20px;">
-                                <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Birth Date</label>
-                                <input type="date" id="birthDate" value="1990-01-01" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
-                            </div>
-                            
-                            <button type="submit" style="width: 100%; padding: 15px; background: linear-gradient(45deg, var(--secondary-green), var(--primary-green)); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
-                                💾 Update Information
-                            </button>
-                        </form>
-                    </div>
+        <div class="stats-section">
+            <div class="stat-card">
+                <h3>Daily Streak</h3>
+                <p>15 🔥</p>
+            </div>
+            <div class="stat-card">
+                <h3>Challenges Completed</h3>
+                <p>28 🏆</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Eco Points</h3>
+                <p>3,450 💰</p>
+            </div>
+        </div>
 
-                    <!-- Account Security -->
-                    <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-                        <h3 style="color: var(--primary-green); margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
-                            🔒 Account Security
-                        </h3>
-                        
-                        <form id="securityForm" onsubmit="updatePassword(event)">
-                            <div style="margin-bottom: 20px;">
-                                <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Current Password</label>
-                                <input type="password" id="currentPassword" placeholder="Enter current password" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
-                            </div>
-                            
-                            <div style="margin-bottom: 20px;">
-                                <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">New Password</label>
-                                <input type="password" id="newPassword" placeholder="Enter new password" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
-                            </div>
-                            
-                            <div style="margin-bottom: 20px;">
-                                <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Confirm New Password</label>
-                                <input type="password" id="confirmPassword" placeholder="Confirm new password" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
-                            </div>
-                            
-                            <button type="submit" style="width: 100%; padding: 15px; background: linear-gradient(45deg, var(--secondary-green), var(--primary-green)); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; margin-bottom: 15px;">
-                                🔑 Update Password
-                            </button>
-                        </form>
-                        
-                        <div style="padding: 15px; background: rgba(143, 188, 143, 0.1); border-radius: 8px; margin-top: 20px;">
-                            <p style="color: var(--secondary-green); font-size: 14px; margin: 0;">
-                                <strong>Security Tips:</strong><br>
-                                • Use at least 8 characters<br>
-                                • Include numbers and symbols<br>
-                                • Don't reuse passwords from other sites
-                            </p>
-                        </div>
-                    </div>
+        <div class="badges-section">
+            <h3>Collected Badges (Trophies)</h3>
+            <div class="badges">
+                <div class="badge" title="First Tree Planted">🌱</div>
+                <div class="badge" title="Water Saver I">💧</div>
+                <div class="badge" title="Solar Power User">☀️</div>
+                <div class="badge" title="Recycle King">♻️</div>
+                <div class="badge locked" title="Locked: Carbon Neutral Pro">🔒</div> 
+            </div>
+        </div>
 
-                    <!-- Notification Preferences -->
-                    <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-                        <h3 style="color: var(--primary-green); margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
-                            🔔 Notifications
-                        </h3>
-                        
-                        <div style="display: flex; flex-direction: column; gap: 15px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(143, 188, 143, 0.3);">
-                                <div>
-                                    <div style="font-weight: 500; color: var(--dark-green);">Weekly Reports</div>
-                                    <div style="font-size: 14px; color: var(--secondary-green);">Receive weekly carbon footprint summaries</div>
-                                </div>
-                                <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
-                                    <input type="checkbox" id="weeklyReports" checked style="opacity: 0; width: 0; height: 0;">
-                                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--light-green); transition: .4s; border-radius: 34px;"></span>
-                                    <span style="position: absolute; content: ''; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;"></span>
-                                </label>
-                            </div>
-                            
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(143, 188, 143, 0.3);">
-                                <div>
-                                    <div style="font-weight: 500; color: var(--dark-green);">Achievement Alerts</div>
-                                    <div style="font-size: 14px; color: var(--secondary-green);">Get notified when you unlock achievements</div>
-                                </div>
-                                <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
-                                    <input type="checkbox" id="achievementAlerts" checked style="opacity: 0; width: 0; height: 0;">
-                                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--light-green); transition: .4s; border-radius: 34px;"></span>
-                                    <span style="position: absolute; content: ''; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;"></span>
-                                </label>
-                            </div>
-                            
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(143, 188, 143, 0.3);">
-                                <div>
-                                    <div style="font-weight: 500; color: var(--dark-green);">Eco Tips</div>
-                                    <div style="font-size: 14px; color: var(--secondary-green);">Daily eco-friendly tips and suggestions</div>
-                                </div>
-                                <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
-                                    <input type="checkbox" id="ecoTips" checked style="opacity: 0; width: 0; height: 0;">
-                                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--light-green); transition: .4s; border-radius: 34px;"></span>
-                                    <span style="position: absolute; content: ''; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;"></span>
-                                </label>
-                            </div>
-                            
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
-                                <div>
-                                    <div style="font-weight: 500; color: var(--dark-green);">Marketing Emails</div>
-                                    <div style="font-size: 14px; color: var(--secondary-green);">Updates about new features and promotions</div>
-                                </div>
-                                <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
-                                    <input type="checkbox" id="marketingEmails" style="opacity: 0; width: 0; height: 0;">
-                                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
-                                    <span style="position: absolute; content: ''; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Privacy Settings -->
-                    <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-                        <h3 style="color: var(--primary-green); margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
-                            🔐 Privacy & Data
-                        </h3>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <h4 style="color: var(--dark-green); margin-bottom: 10px;">Profile Visibility</h4>
-                            <select id="profileVisibility" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
-                                <option value="public">Public - Visible to all users</option>
-                                <option value="friends">Friends Only - Visible to connected users</option>
-                                <option value="private" selected>Private - Only visible to you</option>
-                            </select>
-                        </div>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <h4 style="color: var(--dark-green); margin-bottom: 10px;">Data Sharing</h4>
-                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                                <input type="checkbox" id="shareAnonymousData" checked style="transform: scale(1.2);">
-                                <label for="shareAnonymousData" style="color: var(--secondary-green);">Share anonymous usage data to improve the platform</label>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <input type="checkbox" id="shareResearchData" style="transform: scale(1.2);">
-                                <label for="shareResearchData" style="color: var(--secondary-green);">Participate in climate research studies</label>
-                            </div>
-                        </div>
-                        
-                        <div style="margin-top: 30px; padding: 20px; background: rgba(255, 235, 59, 0.1); border-left: 4px solid var(--accent-yellow); border-radius: 8px;">
-                            <h4 style="color: var(--dark-green); margin-bottom: 10px;">Data Export & Deletion</h4>
-                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                                <button onclick="exportData()" style="padding: 8px 16px; background: var(--light-green); color: white; border: none; border-radius: 20px; cursor: pointer; font-size: 14px;">
-                                    📥 Export My Data
-                                </button>
-                                <button onclick="deleteAccount()" style="padding: 8px 16px; background: #dc3545; color: white; border: none; border-radius: 20px; cursor: pointer; font-size: 14px;">
-                                    🗑️ Delete Account
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Goals & Preferences -->
-                    <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-                        <h3 style="color: var(--primary-green); margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
-                            🎯 Environmental Goals
-                        </h3>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Annual Carbon Reduction Goal (%)</label>
-                            <input type="range" id="reductionGoal" min="5" max="50" value="25" style="width: 100%; margin-bottom: 10px;">
-                            <div style="text-align: center; color: var(--secondary-green); font-weight: bold;">
-                                <span id="goalValue">25</span>% reduction from baseline
-                            </div>
-                        </div>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Primary Focus Areas</label>
-                            <div style="display: grid; gap: 10px;">
-                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
-                                    <input type="checkbox" checked style="transform: scale(1.2);">
-                                    <span>🚗 Transportation</span>
-                                </label>
-                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
-                                    <input type="checkbox" checked style="transform: scale(1.2);">
-                                    <span style="color: var(--secondary-green);">🏠 Home Energy</span>
-                                </label>
-                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
-                                    <input type="checkbox" style="transform: scale(1.2);">
-                                    <span style="color: var(--secondary-green);">🍽️ Diet & Food</span>
-                                </label>
-                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
-                                    <input type="checkbox" style="transform: scale(1.2);">
-                                    <span style="color: var(--secondary-green);">🛒 Consumption</span>
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <label style="display: block; margin-bottom: 5px; color: var(--dark-green); font-weight: 500;">Reminder Frequency</label>
-                            <select id="reminderFrequency" style="width: 100%; padding: 12px; border: 2px solid var(--light-green); border-radius: 8px; font-size: 16px;">
-                                <option value="daily">Daily</option>
-                                <option value="weekly" selected>Weekly</option>
-                                <option value="monthly">Monthly</option>
-                                <option value="never">Never</option>
-                            </select>
-                        </div>
-                        
-                        <button onclick="saveGoals()" style="width: 100%; padding: 15px; background: linear-gradient(45deg, var(--secondary-green), var(--primary-green)); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
-                            🎯 Save Goals
-                        </button>
-                    </div>
-
-                    <!-- Account Statistics -->
-                    <div style="background: linear-gradient(135deg, var(--secondary-green), var(--primary-green)); padding: 30px; border-radius: 15px; color: white;">
-                        <h3 style="color: var(--accent-yellow); margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
-                            📊 Account Statistics
-                        </h3>
-                        
-                        <div style="display: grid; gap: 20px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span>Member Since:</span>
-                                <span style="font-weight: bold;">January 2024</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span>Calculations Completed:</span>
-                                <span style="font-weight: bold;">47</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span>Achievements Unlocked:</span>
-                                <span style="font-weight: bold;">12 / 25</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span>CO2 Reduced:</span>
-                                <span style="font-weight: bold; color: var(--accent-yellow);">2.5 tons</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span>Current Ranking:</span>
-                                <span style="font-weight: bold; color: var(--accent-yellow);">#12 Global</span>
-                            </div>
-                        </div>
-                        
-                        <div style="margin-top: 25px; text-align: center;">
-                            <a href="dashboard.html" style="background: var(--accent-yellow); color: var(--dark-green); padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-block;">
-                                🏠 Back to Dashboard
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </main>
+        <div class="action-buttons">
+            <button class="btn">Edit Profile</button>
+            <button class="btn btn-gold">View Achievements</button>
+            <button class="btn">Logout</button>
         </div>
     </div>
-
+    
     <script>
-        // Check authentication
-        if (localStorage.getItem('isLoggedIn') !== 'true') {
-            window.location.href = 'index.html';
-        }
-
-        // Logout function
+        // Simple script to ensure the progress bar animation runs smoothly on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const progressBar = document.getElementById('xp-bar-visual');
+            // The width style attribute is set in the HTML for initial state,
+            // but for the animation to run, you might set the width to 0 
+            // initially in CSS and then set the final width here.
+            // Since we set the style inline, we use JS to ensure the transition fires.
+            // For a more dramatic effect, you'd set width: 0% in CSS and then:
+            // progressBar.style.width = '70%'; 
+        });
         function logout() {
             localStorage.removeItem('isLoggedIn');
             localStorage.removeItem('userEmail');
             window.location.href = 'index.html';
         }
-
-        // Update personal information
-        function updatePersonalInfo(event) {
-            event.preventDefault();
-            const button = event.target.querySelector('button');
-            const originalText = button.innerHTML;
-            
-            button.innerHTML = '💾 Updating...';
-            button.disabled = true;
-            
-            setTimeout(() => {
-                button.innerHTML = '✅ Updated!';
-                button.style.background = 'linear-gradient(45deg, var(--light-green), var(--accent-yellow))';
-                
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.style.background = 'linear-gradient(45deg, var(--secondary-green), var(--primary-green))';
-                    button.disabled = false;
-                }, 2000);
-            }, 1500);
-        }
-
-        // Update password
-        function updatePassword(event) {
-            event.preventDefault();
-            const currentPassword = document.getElementById('currentPassword').value;
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const button = event.target.querySelector('button');
-            
-            if (!currentPassword || !newPassword || !confirmPassword) {
-                alert('Please fill in all password fields.');
-                return;
-            }
-            
-            if (newPassword !== confirmPassword) {
-                alert('New passwords do not match.');
-                return;
-            }
-            
-            if (newPassword.length < 8) {
-                alert('Password must be at least 8 characters long.');
-                return;
-            }
-            
-            button.innerHTML = '🔑 Updating...';
-            button.disabled = true;
-            
-            setTimeout(() => {
-                button.innerHTML = '✅ Password Updated!';
-                button.style.background = 'linear-gradient(45deg, var(--light-green), var(--accent-yellow))';
-                
-                // Clear password fields
-                document.getElementById('currentPassword').value = '';
-                document.getElementById('newPassword').value = '';
-                document.getElementById('confirmPassword').value = '';
-                
-                setTimeout(() => {
-                    button.innerHTML = '🔑 Update Password';
-                    button.style.background = 'linear-gradient(45deg, var(--secondary-green), var(--primary-green))';
-                    button.disabled = false;
-                }, 2000);
-            }, 1500);
-        }
-
-        // Save environmental goals
-        function saveGoals() {
-            const button = event.target;
-            const originalText = button.innerHTML;
-            
-            button.innerHTML = '🎯 Saving...';
-            button.disabled = true;
-            
-            setTimeout(() => {
-                button.innerHTML = '✅ Goals Saved!';
-                button.style.background = 'linear-gradient(45deg, var(--light-green), var(--accent-yellow))';
-                
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.style.background = 'linear-gradient(45deg, var(--secondary-green), var(--primary-green))';
-                    button.disabled = false;
-                }, 2000);
-            }, 1500);
-        }
-
-        // Export user data
-        function exportData() {
-            alert('Your data export has been prepared and will be sent to your email within 24 hours. 📥');
-        }
-
-        // Delete account (with confirmation)
-        function deleteAccount() {
-            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-                if (confirm('This will permanently delete all your data, including calculations, achievements, and profile information. Continue?')) {
-                    alert('Account deletion request submitted. You will receive a confirmation email shortly. 🗑️');
-                }
-            }
-        }
-
-        // Initialize toggle switches
-        document.addEventListener('DOMContentLoaded', function() {
-            // Handle toggle switches
-            const toggles = document.querySelectorAll('input[type="checkbox"]');
-            toggles.forEach(toggle => {
-                const slider = toggle.nextElementSibling;
-                if (slider && slider.tagName === 'SPAN') {
-                    updateToggleState(toggle);
-                    
-                    toggle.addEventListener('change', function() {
-                        updateToggleState(this);
-                    });
-                }
-            });
-
-            // Update reduction goal display
-            const goalSlider = document.getElementById('reductionGoal');
-            const goalValue = document.getElementById('goalValue');
-            
-            goalSlider.addEventListener('input', function() {
-                goalValue.textContent = this.value;
-            });
-
-            // Add hover effects to buttons
-            const buttons = document.querySelectorAll('button, input[type="submit"]');
-            buttons.forEach(button => {
-                button.addEventListener('mouseenter', function() {
-                    if (!this.disabled) {
-                        this.style.transform = 'translateY(-2px)';
-                        this.style.boxShadow = '0 8px 20px rgba(0,0,0,0.2)';
-                    }
-                });
-                
-                button.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                    this.style.boxShadow = 'none';
-                });
-            });
-        });
-
-        function updateToggleState(toggle) {
-            const slider = toggle.nextElementSibling;
-            const knob = slider.nextElementSibling;
-            
-            if (toggle.checked) {
-                slider.style.backgroundColor = 'var(--secondary-green)';
-                knob.style.transform = 'translateX(26px)';
-            } else {
-                slider.style.backgroundColor = '#ccc';
-                knob.style.transform = 'translateX(0px)';
-            }
-        }
-
-        // Add form validation
-        document.getElementById('personalForm').addEventListener('input', function(e) {
-            const input = e.target;
-            if (input.type === 'email') {
-                if (input.value && !input.value.includes('@')) {
-                    input.style.borderColor = '#dc3545';
-                } else {
-                    input.style.borderColor = 'var(--light-green)';
-                }
-            }
-        });
     </script>
+
 </body>
 </html>

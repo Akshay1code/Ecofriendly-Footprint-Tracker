@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco Warrior Videos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS Variables for standalone display --- */
+        /* These should ideally be in your main styles.css, but are included here for context */
+        :root {
+            --primary-green: #2D5016;
+            --secondary-green: #4A7C59;
+            --light-green: #8FBC8F;
+            --accent-yellow: #F0E68C; /* Gold/Yellow Accent */
+            --dark-green: #1B3409;
+            --transition: all 0.3s ease;
+        }
+
+        /* --- Global Animations (Keep these for consistency) --- */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(8px); } }
+
+        /* --- Video Tabs Container --- */
+        .video-tabs {
+            margin-top: 30px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(245,255,245,0.96));
+            border-radius: 16px;
+            border: 2px solid rgba(74,124,89,0.15);
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: var(--transition);
+        }
+        .tab-buttons {
+            display: flex;
+            gap: 12px;
+            padding: 14px;
+            background: transparent;
+        }
+        .tab-buttons button {
+            flex: 1;
+            background: linear-gradient(90deg, var(--light-green), var(--secondary-green));
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: .5px;
+            transition: var(--transition);
+        }
+        .tab-buttons button[aria-selected="true"] {
+            background: var(--accent-yellow);
+            color: var(--dark-green);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+        }
+        .tab-buttons button:hover:not([aria-selected="true"]) { filter: brightness(1.03); }
+        .tab-content { padding: 20px; background: transparent; }
+        .tab-panel {
+            display: none;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: var(--transition);
+        }
+        .tab-panel.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeIn 300ms ease-out;
+        }
+        .tab-panel.leaving { animation: fadeOut 250ms ease-in forwards; }
+
+        /* Video cards aligned with dashboard theme */
+        .video-card {
+            background: #ffffff;
+            border: 2px solid rgba(74,124,89,0.15);
+            border-radius: 14px;
+            padding: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: var(--transition);
+        }
+        .video-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(74,124,89,0.2);
+            border-color: var(--secondary-green);
+        }
+        .video-card video {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            outline: 2px solid var(--secondary-green);
+            background: #000;
+            transition: var(--transition);
+        }
+        .video-card h4 {
+            margin: 10px 4px 4px 4px;
+            color: var(--primary-green);
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+        .video-card p {
+            margin: 0 4px 4px 4px;
+            color: var(--secondary-green);
+            font-size: 0.9rem;
+            opacity: 0.95;
+        }
+
+
+        /* Realistic CTA button styling - (No changes made, already well-styled) */
+        .cta-btn {
+             background: var(--accent-yellow);
+             color: var(--dark-green);
+             padding: 14px 28px;
+             border-radius: 30px;
+             text-decoration: none;
+             font-weight: 700;
+             display: inline-block;
+             position: relative;
+             box-shadow: 0 8px 0 rgba(191, 166, 0, 1), 0 12px 18px rgba(0,0,0,0.25);
+             transform: translateY(0);
+             transition: transform 60ms ease, box-shadow 60ms ease, filter 200ms ease;
+        }
+        .cta-btn:hover { filter: brightness(1.03); }
+        .cta-btn:active {
+             transform: translateY(4px);
+             box-shadow: 0 4px 0 rgba(191, 166, 0, 1), 0 6px 10px rgba(0,0,0,0.25);
+        }
+        .cta-btn::before {
+             content: '';
+             position: absolute;
+             top: 2px;
+             left: 8px;
+             right: 8px;
+             height: 40%;
+             border-radius: 20px;
+             background: linear-gradient(to bottom, rgba(255,255,255,0.45), rgba(255,255,255,0));
+             pointer-events: none;
+        }
+
+        @media (max-width: 520px) { 
+            .video-card video { 
+                height: 200px; 
+            } 
+            .tab-buttons {
+                flex-direction: column;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="floating-leaves">
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="dashboard.html" class="logo">
+                <span>EcoFootprint Tracker</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="profile.html">Profile Settings</a></li>
+                <li><a href="javascript:void(0)" onclick="logout(); return false;" style="color: var(--accent-yellow);">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-content" style="justify-content: center; padding: 30px;"> 
+        <main class="main-section" style="width: 100%; max-width: 1000px;">
+            <div style="background: linear-gradient(135deg, var(--secondary-green), var(--primary-green)); color: white; text-align: center; padding: 50px 40px; border-radius: 20px; margin-top: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); animation: fadeInUp 1.2s ease-out; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 20px; right: 20px; font-size: 4em; opacity: 0.1;">🎬</div>
+                <h1 style="color: var(--accent-yellow); font-size: 2.2em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">Video Hub: Learn & Share</h1>
+                <p style="font-size: 1.1em; margin-bottom: 25px; line-height: 1.6; color: #fffbe6;">
+                    Watch, learn, and contribute your knowledge to empower our community of **Eco Warriors**.
+                </p>
+                <div style="display: flex; justify-content: center; margin-top: 10px;">
+                    <a href="submit-video.html" class="cta-btn">Create & Upload Video</a>
+                </div>
+            </div>
+
+            <section class="video-tabs" aria-label="Videos">
+                <div class="tab-buttons" role="tablist">
+                    <button id="tab-my" role="tab" aria-controls="panel-my" aria-selected="true">My Videos</button>
+                    <button id="tab-community" role="tab" aria-controls="panel-community" aria-selected="false">Community Feed</button>
+                </div>
+                <div class="tab-content">
+                    <div id="panel-my" class="tab-panel active" role="tabpanel" aria-labelledby="tab-my">
+                        <div class="video-card">
+                            <video controls preload="metadata" poster="https://via.placeholder.com/640x360/2D5016/ffffff?text=My+Video+1">
+                                <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <h4>Energy Savings at Home</h4>
+                            <p>Quick tips to reduce electricity usage and earn XP.</p>
+                        </div>
+                        <div class="video-card">
+                            <video controls preload="metadata" poster="https://via.placeholder.com/640x360/4A7C59/ffffff?text=My+Video+2">
+                                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <h4>Weekly Eco Challenges</h4>
+                            <p>Join me in 3 easy eco-friendly tasks for badges.</p>
+                        </div>
+                    </div>
+
+                    <div id="panel-community" class="tab-panel" role="tabpanel" aria-labelledby="tab-community">
+                        <div class="video-card">
+                            <video controls preload="metadata" poster="https://via.placeholder.com/640x360/8FBC8F/ffffff?text=Community+1">
+                                <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <h4>Composting Basics 🌿</h4>
+                            <p>EcoWarrior Zoe shares a beginner guide.</p>
+                        </div>
+                        <div class="video-card">
+                            <video controls preload="metadata" poster="https://via.placeholder.com/640x360/F0E68C/2D5016?text=Community+2">
+                                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <h4>Bike-to-Work Journey 🚴</h4>
+                            <p>Tom’s tips for safer, greener commuting.</p>
+                        </div>
+                         <div class="video-card">
+                            <video controls preload="metadata" poster="https://via.placeholder.com/640x360/4A7C59/ffffff?text=Community+3">
+                                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <h4>DIY Upcycled Planters</h4>
+                            <p>A fun way to reuse plastic containers.</p>
+                        </div>
+                         <div class="video-card">
+                            <video controls preload="metadata" poster="https://via.placeholder.com/640x360/2D5016/ffffff?text=Community+4">
+                                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <h4>Zero Waste Kitchen Tour</h4>
+                            <p>Tips for eliminating single-use plastics.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userEmail');
+            window.location.href = 'index.html';
+        }
+
+        // Tabs logic with leave/enter animations
+        (function() {
+            const tabs = {
+                my: {
+                    button: document.getElementById('tab-my'),
+                    panel: document.getElementById('panel-my')
+                },
+                community: {
+                    button: document.getElementById('tab-community'),
+                    panel: document.getElementById('panel-community')
+                }
+            };
+
+            function selectTab(target) {
+                const current = tabs.my.button.getAttribute('aria-selected') === 'true' ? 'my' : 'community';
+                if (current === target) return;
+
+                // Update button states
+                tabs[current].button.setAttribute('aria-selected', 'false');
+                tabs[target].button.setAttribute('aria-selected', 'true');
+
+                // Animate out current panel
+                const leaving = tabs[current].panel;
+                leaving.classList.add('leaving');
+                
+                // Use setTimeout instead of animationend for more reliable and controlled transition
+                setTimeout(() => {
+                    leaving.classList.remove('leaving', 'active');
+                    leaving.style.display = 'none';
+
+                    // Show target panel
+                    const entering = tabs[target].panel;
+                    entering.style.display = 'grid'; // Use grid here for active state
+                    entering.classList.add('active');
+                    entering.scrollTop = 0;
+                }, 250); // Matches the fadeOut animation duration
+            }
+
+            tabs.my.button.addEventListener('click', () => selectTab('my'));
+            tabs.community.button.addEventListener('click', () => selectTab('community'));
+        })();
+    </script>
+</body>
+</html>

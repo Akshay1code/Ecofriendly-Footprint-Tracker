@@ -30,7 +30,7 @@
                     <li><a href="dashboard.html" class="active">Home</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="profile.html">Profile Settings</a></li>
-                    <li><a href="#" onclick="logout()" style="color: #F0E68C;">Logout</a></li>
+                    <li><a href="javascript:void(0)" onclick="logout(); return false;" style="color: #F0E68C;">Logout</a></li>
                 </ul>
             </div>
         </nav>
@@ -142,6 +142,15 @@
                             <h3 style="font-size: 2em; margin-bottom: 10px;">87%</h3>
                             <p>Eco Goals Achieved</p>
                         </div>
+                        <!-- Green Coin System Card -->
+                        <div style="background: linear-gradient(135deg, #8FBC8F, #2D5016); padding: 25px; border-radius: 15px; color: var(--accent-yellow); text-align: center; animation: fadeInUp 1s ease-out 0.3s; animation-fill-mode: both; position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 14px; right: 16px; font-size: 2.2em; opacity: 0.15;">🪙</div>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                <span style="display:inline-flex; align-items:center; justify-content:center; width: 42px; height: 42px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #5fbf6b, #2D5016); box-shadow: inset 0 0 0 3px rgba(255,255,255,0.25);">💚</span>
+                                <h3 style="font-size: 2.2em; margin: 0;">300</h3>
+                            </div>
+                            <p style="color: #fffbe6; margin-top: 8px; font-weight: 600; letter-spacing: 0.3px;">Green Coins</p>
+                        </div>
                         
                         <div style="background: linear-gradient(135deg, #2D5016, #4A7C59); padding: 25px; border-radius: 15px; color: var(--accent-yellow); text-align: center; animation: fadeInUp 1s ease-out 0.4s; animation-fill-mode: both;">
                             <h3 style="font-size: 2em; margin-bottom: 10px;">#12</h3>
@@ -177,6 +186,19 @@
                             ⚙️ Settings
                         </a>
                     </div>
+
+                    <!-- Videos Section (Theme-matched container) -->
+                    <section style="background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(245,255,245,0.96)); color: var(--primary-green); padding: 35px 30px; border-radius: 18px; margin-top: 40px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); border: 2px solid rgba(74,124,89,0.15); animation: fadeInUp 1s ease-out;">
+                        <h3 style="color: var(--primary-green); font-size: 1.8em; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            🎬 Videos Section
+                        </h3>
+                        <p style="margin-bottom: 20px; color: var(--secondary-green); font-weight: 500;">
+                            Create a Video or look for better understanding from our ecowarriors.
+                        </p>
+                        <a href="videos.html" style="display: inline-block; background: var(--primary-green); color: var(--accent-yellow); padding: 14px 28px; border-radius: 30px; text-decoration: none; font-weight: 700; transition: all 0.3s ease;">
+                            Explore Videos →
+                        </a>
+                    </section>
 
                     <!-- Calculator Card - NOW IN CENTER -->
                     <div style="background: linear-gradient(135deg, var(--secondary-green), var(--primary-green)); color: white; text-align: center; padding: 50px 40px; border-radius: 20px; margin-top: 50px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); animation: fadeInUp 1.2s ease-out; position: relative; overflow: hidden;">
@@ -294,10 +316,12 @@
                             <span class="reduction-amount">-1.5 tons CO2</span>
                         </div>
                     </div>
-                </div>
-            </aside>
         </div>
     </div>
+
+    <footer style="background: linear-gradient(135deg, #2D5016, #4A7C59); color: var(--accent-yellow); padding: 24px 16px; margin-top: 40px; border-top: 2px solid rgba(74,124,89,0.2); box-shadow: 0 -8px 20px rgba(0,0,0,0.15); text-align: center; font-weight: 700; letter-spacing: 0.3px;">
+        Created by EcoWarriors • All rights reserved.
+    </footer>
 
     <script>
         // Check authentication
