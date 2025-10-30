@@ -184,7 +184,7 @@
                 <div style="position: absolute; top: 20px; right: 20px; font-size: 4em; opacity: 0.1;">🎬</div>
                 <h1 style="color: var(--accent-yellow); font-size: 2.2em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">Video Hub: Learn & Share</h1>
                 <p style="font-size: 1.1em; margin-bottom: 25px; line-height: 1.6; color: #fffbe6;">
-                    Watch, learn, and contribute your knowledge to empower our community of **Eco Warriors**.
+                    Watch, learn, and contribute your knowledge to empower our community of Eco Warriors.
                 </p>
                 <div style="display: flex; justify-content: center; margin-top: 10px;">
                     <a href="submit-video.html" class="cta-btn">Create & Upload Video</a>
@@ -275,6 +275,20 @@
                 }
             };
 
+            // Ensure only one video plays at a time across the page
+            function setupExclusiveVideoPlayback() {
+                const videos = Array.from(document.querySelectorAll('.video-card video'));
+                videos.forEach((vid) => {
+                    vid.addEventListener('play', () => {
+                        videos.forEach((other) => {
+                            if (other !== vid && !other.paused) {
+                                other.pause();
+                            }
+                        });
+                    });
+                });
+            }
+
             function selectTab(target) {
                 const current = tabs.my.button.getAttribute('aria-selected') === 'true' ? 'my' : 'community';
                 if (current === target) return;
@@ -285,6 +299,8 @@
 
                 // Animate out current panel
                 const leaving = tabs[current].panel;
+                // Pause any playing videos in the panel that's leaving
+                leaving.querySelectorAll('video').forEach(v => v.pause());
                 leaving.classList.add('leaving');
                 
                 // Use setTimeout instead of animationend for more reliable and controlled transition
@@ -302,6 +318,9 @@
 
             tabs.my.button.addEventListener('click', () => selectTab('my'));
             tabs.community.button.addEventListener('click', () => selectTab('community'));
+
+            // Initialize exclusive playback listeners
+            setupExclusiveVideoPlayback();
         })();
     </script>
 </body>

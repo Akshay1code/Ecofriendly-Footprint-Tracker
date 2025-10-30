@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create To-Do List - EcoFootprint Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="floating-leaves">
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="dashboard.html" class="logo">
+                <span>EcoFootprint Tracker</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="profile.html">Profile Settings</a></li>
+                <li><a href="javascript:void(0)" onclick="logout(); return false;" style="color: var(--accent-yellow);">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-content" style="justify-content: center; padding: 30px;">
+        <main class="main-section" style="width: 100%; max-width: 900px;">
+            <div style="background: linear-gradient(135deg, var(--secondary-green), var(--primary-green)); color: white; text-align: center; padding: 40px 30px; border-radius: 20px; margin-top: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 16px; right: 18px; font-size: 3em; opacity: 0.1;">📋</div>
+                <h1 style="color: var(--accent-yellow); font-size: 2em; margin-bottom: 10px;">Create Your Eco To-Do List</h1>
+                <p style="font-size: 1.05em; color: #fffbe6;">List simple actions to reduce your footprint. One task per line.</p>
+            </div>
+
+            <section style="margin-top: 24px; background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(245,255,245,0.96)); border: 2px solid rgba(74,124,89,0.15); border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); padding: 22px;">
+                <form id="todo-form" style="display: grid; gap: 12px;">
+                    <label for="tasks" style="color: var(--primary-green); font-weight: 700;">Your Tasks</label>
+                    <textarea id="tasks" rows="10" placeholder="e.g. Switch to LED bulbs
+Use public transport twice a week
+Start composting" style="width: 100%; padding: 12px 14px; border-radius: 12px; border: 2px solid rgba(74,124,89,0.25); font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial; outline: none; resize: vertical; background: #ffffff;"></textarea>
+
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end; margin-top: 6px;">
+                        <a href="dashboard.html" style="background: var(--light-green); color: var(--dark-green); padding: 12px 22px; border-radius: 28px; text-decoration: none; font-weight: 700; transition: all 0.3s ease;">Cancel</a>
+                        <button type="submit" style="background: var(--accent-yellow); color: var(--dark-green); padding: 12px 22px; border-radius: 28px; border: none; font-weight: 700; cursor: pointer; box-shadow: 0 8px 0 rgba(191, 166, 0, 1), 0 12px 18px rgba(0,0,0,0.2); transition: transform 60ms ease, box-shadow 60ms ease;">Save Tasks →</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Auth guard
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userEmail');
+            window.location.href = 'index.html';
+        }
+
+        // Form handler
+        document.getElementById('todo-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const raw = document.getElementById('tasks').value || '';
+            const tasks = raw
+                .split(/\r?\n/)
+                .map(t => t.trim())
+                .filter(t => t.length > 0);
+
+            if (tasks.length === 0) {
+                alert('Please enter at least one task.');
+                return;
+            }
+
+            try {
+                const existingRaw = localStorage.getItem('todoTasks');
+                const existing = existingRaw ? JSON.parse(existingRaw) : [];
+                const merged = Array.from(new Set([...(Array.isArray(existing) ? existing : []), ...tasks]));
+                localStorage.setItem('todoTasks', JSON.stringify(merged));
+            } catch (err) {
+                alert('Could not save tasks. Please try again.');
+                return;
+            }
+
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>

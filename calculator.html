@@ -690,11 +690,36 @@
 
             document.getElementById('user-rank').textContent = rankings[rankIndex];
 
+            // Persist monthly breakdown for dashboard graph (store in kg)
+            saveMonthlyBreakdown(footprint);
+
             // Generate personalized suggestions
             generateSuggestions(transport, diet, flights, footprint);
 
             // Scroll to results
             document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function saveMonthlyBreakdown(annualTonnes) {
+            try {
+                const baseKg = (annualTonnes * 1000) / 12; // average per month in kg
+                const months = 12;
+                const factors = [];
+                // Create seasonal variation with small random jitter
+                for (let i = 0; i < months; i++) {
+                    const seasonal = 1 + 0.12 * Math.sin((2 * Math.PI * (i)) / 12); // -0.12..+0.12
+                    const jitter = 1 + (Math.random() - 0.5) * 0.10; // +/-5%
+                    factors.push(seasonal * jitter);
+                }
+                // Normalize so average factor is 1
+                const avg = factors.reduce((a, b) => a + b, 0) / months;
+                const normalized = factors.map(f => f / avg);
+                const monthlyKg = normalized.map(f => Math.max(0, Math.round(baseKg * f)));
+                localStorage.setItem('monthlyFootprintKg', JSON.stringify(monthlyKg));
+                localStorage.setItem('monthlyFootprintUpdatedAt', new Date().toISOString());
+            } catch (e) {
+                console.warn('Failed to save monthly breakdown', e);
+            }
         }
 
         function animateValue(id, start, end, duration) {
